@@ -8,6 +8,7 @@ import android.os.StrictMode;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
 
         ListView vehicleList = findViewById(R.id.vehicleListView);
+        Button addVehicle = findViewById(R.id.addVehicle);
 
         HttpURLConnection urlConnection;
         InputStream in = null;
@@ -71,20 +73,11 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("Server response = " + response);
 
         try {
-            // declare a new json array and pass it the string response from the server
-            // this will convert the string into a JSON array which we can then iterate
-            // over using a loop
             JSONArray jsonArray = new JSONArray(response);
-            // instantiate the cheeseNames array and set the size
-            // to the amount of cheese object returned by the server
             vehicles = new String[jsonArray.length()];
 
-            // use a for loop to iterate over the JSON array
             for (int i=0; i < jsonArray.length(); i++)
             {
-                // the following line of code will get the name of the cheese from the
-                // current JSON object and store it in a string variable called name
-
                 int vehicle_id = Integer.parseInt(jsonArray.getJSONObject(i).get("vehicle_id").toString());
                 String make = jsonArray.getJSONObject(i).get("make").toString();
                 String model = jsonArray.getJSONObject(i).get("model").toString();
@@ -101,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
                 String condition = jsonArray.getJSONObject(i).get("condition").toString();
                 String notes = jsonArray.getJSONObject(i).get("notes").toString();
 
-                // print the name to log cat
                 System.out.println("model = " + model);
 
                 Vehicle v = new Vehicle( vehicle_id, make, model,
@@ -111,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
 
                 allVehicles.add(v);
 
-                // add the name of the current cheese to the cheeseNames array
                 vehicles [i] = model;
             }
         } catch (JSONException e) {
@@ -135,84 +126,20 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+        addVehicle.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(getApplicationContext(), InsertActivity.class);
+
+                startActivity(intent);
+            }
+        });
+
     }
 
     private String convertStreamToString(InputStream is) {
         java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
         return s.hasNext() ? s.next() : "";
-    }
-
-    public String PostCall(String requestURL, HashMap<String, String> postDataParams)
-    {
-        URL url;
-        String response = "";
-        try {
-            url = new URL(requestURL);
-
-            //create connection object
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(15000);
-            conn.setConnectTimeout(15000);
-            conn.setRequestMethod("POST");
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
-
-            //POST data to the connection using output stream and buffered writer
-            OutputStream os = conn.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-
-            writer.write(getPostDataString(postDataParams));
-
-            //clear the writer
-            writer.flush();
-            writer.close();
-
-            //close output stream
-            os.close();
-
-            //get the server response code
-            int responseCode = conn.getResponseCode();
-            System.out.print("Response Code = " + responseCode);
-
-            if(responseCode == HttpsURLConnection.HTTP_OK)
-            {
-                Toast.makeText(this, "Contact Saved", Toast.LENGTH_LONG).show();
-                String line;
-                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                while((line = br.readLine()) != null)
-                {
-                    response += line;
-                }
-            }
-            else {
-                Toast.makeText(this, "Error failed to save contact", Toast.LENGTH_LONG).show();
-                response = "";
-            }
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-
-        System.out.println("response = " + response);
-        return response;
-    }
-
-    private String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException
-    {
-        StringBuilder result = new StringBuilder();
-        boolean first = true;
-        for(Map.Entry<String, String> entry : params.entrySet())
-        {
-            if(first)
-                first = false;
-            else
-                result.append("&");
-
-            result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
-            result.append("=");
-            result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
-        }
-
-        return result.toString();
     }
 }
