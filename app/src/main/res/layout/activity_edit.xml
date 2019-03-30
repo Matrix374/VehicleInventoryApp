@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.EditActivity">
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="395dp"
+        android:layout_height="513dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.45">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/make"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Make"
+                android:inputType="textPersonName"
+                tools:layout_editor_absoluteX="52dp"
+                tools:layout_editor_absoluteY="129dp" />
+
+            <EditText
+                android:id="@+id/model"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Model"
+                android:inputType="textPersonName"
+                tools:layout_editor_absoluteX="52dp"
+                tools:layout_editor_absoluteY="129dp" />
+
+            <EditText
+                android:id="@+id/year"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Year"
+                android:inputType="textPersonName"
+                tools:layout_editor_absoluteX="52dp"
+                tools:layout_editor_absoluteY="129dp" />
+
+            <EditText
+                android:id="@+id/price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Price"
+                android:inputType="textPersonName"
+                tools:layout_editor_absoluteX="52dp"
+                tools:layout_editor_absoluteY="129dp" />
+
+            <EditText
+                android:id="@+id/license_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="License Number"
+                android:inputType="textPersonName"
+                tools:layout_editor_absoluteX="52dp"
+                tools:layout_editor_absoluteY="129dp" />
+
+            <EditText
+                android:id="@+id/colour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Colour"
+                android:inputType="textPersonName"
+                tools:layout_editor_absoluteX="52dp"
+                tools:layout_editor_absoluteY="129dp" />
+
+            <EditText
+                android:id="@+id/number_doors"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Number of Doors"
+                android:inputType="textPersonName"
+                tools:layout_editor_absoluteX="52dp"
+                tools:layout_editor_absoluteY="129dp" />
+
+            <EditText
+                android:id="@+id/transmission"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Transmission"
+                android:inputType="textPersonName"
+                tools:layout_editor_absoluteX="52dp"
+                tools:layout_editor_absoluteY="129dp" />
+
+            <EditText
+                android:id="@+id/mileage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Mileage"
+                android:inputType="textPersonName"
+                tools:layout_editor_absoluteX="52dp"
+                tools:layout_editor_absoluteY="129dp" />
+
+            <EditText
+                android:id="@+id/fuel_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Fuel Type"
+                android:inputType="textPersonName"
+                tools:layout_editor_absoluteX="52dp"
+                tools:layout_editor_absoluteY="129dp" />
+
+            <EditText
+                android:id="@+id/engine_size"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Engine Size"
+                android:inputType="textPersonName"
+                tools:layout_editor_absoluteX="52dp"
+                tools:layout_editor_absoluteY="129dp" />
+
+            <EditText
+                android:id="@+id/body_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Body Style"
+                android:inputType="textPersonName"
+                tools:layout_editor_absoluteX="52dp"
+                tools:layout_editor_absoluteY="129dp" />
+
+            <EditText
+                android:id="@+id/condition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Condition"
+                android:inputType="textPersonName"
+                tools:layout_editor_absoluteX="52dp"
+                tools:layout_editor_absoluteY="129dp" />
+
+            <EditText
+                android:id="@+id/notes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Notes"
+                android:inputType="textPersonName"
+                tools:layout_editor_absoluteX="52dp"
+                tools:layout_editor_absoluteY="129dp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        app:layout_constraintVertical_bias="0.218" />
+
+</android.support.constraint.ConstraintLayout>

@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
                 allVehicles.add(v);
 
-                vehicles [i] = model;
+                vehicles [i] = vehicle_id + " " + make + " " + model;
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -124,6 +124,19 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
 
+        });
+
+        vehicleList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int i, long id) {
+                Intent intent = new Intent(getApplicationContext(), DeleteActivity.class);
+
+                intent.putExtra("vehicle", allVehicles.get(i));
+
+                startActivity(intent);
+
+                return true;
+            }
         });
 
         addVehicle.setOnClickListener(new View.OnClickListener(){

@@ -35,4 +35,14 @@
         android:paddingTop="10dp"
         android:text="Body"
         android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/EditButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="68dp"
+        android:layout_marginBottom="70dp"
+        android:text="Edit" />
 </RelativeLayout>
