@@ -55,59 +55,7 @@ public class MainActivity extends AppCompatActivity {
         ListView vehicleList = findViewById(R.id.vehicleListView);
         Button addVehicle = findViewById(R.id.addVehicle);
 
-        HttpURLConnection urlConnection;
-        InputStream in = null;
-        try {
-            // the url we wish to connect to
-            URL url = new URL("http://10.0.2.2:4000/VDB/server");
-            // open the connection to the specified URL
-            urlConnection = (HttpURLConnection) url.openConnection();
-            // get the response from the server in an input stream
-            in = new BufferedInputStream(urlConnection.getInputStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-// covert the input stream to a string
-        String response = convertStreamToString(in);
-// print the response to android monitor/log cat
-        System.out.println("Server response = " + response);
-
-        try {
-            JSONArray jsonArray = new JSONArray(response);
-            vehicles = new String[jsonArray.length()];
-
-            for (int i=0; i < jsonArray.length(); i++)
-            {
-                int vehicle_id = Integer.parseInt(jsonArray.getJSONObject(i).get("vehicle_id").toString());
-                String make = jsonArray.getJSONObject(i).get("make").toString();
-                String model = jsonArray.getJSONObject(i).get("model").toString();
-                int year = Integer.parseInt(jsonArray.getJSONObject(i).get("year").toString());
-                int price = Integer.parseInt(jsonArray.getJSONObject(i).get("price").toString());
-                String license_number = jsonArray.getJSONObject(i).get("license_number").toString();
-                String colour = jsonArray.getJSONObject(i).get("colour").toString();
-                int number_doors = Integer.parseInt(jsonArray.getJSONObject(i).get("number_doors").toString());
-                String transmission = jsonArray.getJSONObject(i).get("transmission").toString();
-                int mileage = Integer.parseInt(jsonArray.getJSONObject(i).get("mileage").toString());
-                String fuel_type = jsonArray.getJSONObject(i).get("fuel_type").toString();
-                int engine_size = Integer.parseInt(jsonArray.getJSONObject(i).get("engine_size").toString());
-                String body_style = jsonArray.getJSONObject(i).get("body_style").toString();
-                String condition = jsonArray.getJSONObject(i).get("condition").toString();
-                String notes = jsonArray.getJSONObject(i).get("notes").toString();
-
-                System.out.println("model = " + model);
-
-                Vehicle v = new Vehicle( vehicle_id, make, model,
-                        year, price, license_number, colour, number_doors,
-                        transmission, mileage, fuel_type, engine_size,
-                        body_style, condition, notes);
-
-                allVehicles.add(v);
-
-                vehicles [i] = vehicle_id + " " + make + " " + model;
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        GetVehicles();
 
         ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, vehicles);
         vehicleList.setAdapter(arrayAdapter);
@@ -149,6 +97,63 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void GetVehicles()
+    {
+        HttpURLConnection urlConnection;
+        InputStream in = null;
+        try {
+            // the url we wish to connect to
+            URL url = new URL("http://10.0.2.2:4000/VDB/server");
+            // open the connection to the specified URL
+            urlConnection = (HttpURLConnection) url.openConnection();
+            // get the response from the server in an input stream
+            in = new BufferedInputStream(urlConnection.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // covert the input stream to a string
+        String response = convertStreamToString(in);
+        // print the response to android monitor/log cat
+        System.out.println("Server response = " + response);
+
+        try {
+            JSONArray jsonArray = new JSONArray(response);
+            vehicles = new String[jsonArray.length()];
+
+            for (int i=0; i < jsonArray.length(); i++)
+            {
+                int vehicle_id = Integer.parseInt(jsonArray.getJSONObject(i).get("vehicle_id").toString());
+                String make = jsonArray.getJSONObject(i).get("make").toString();
+                String model = jsonArray.getJSONObject(i).get("model").toString();
+                int year = Integer.parseInt(jsonArray.getJSONObject(i).get("year").toString());
+                int price = Integer.parseInt(jsonArray.getJSONObject(i).get("price").toString());
+                String license_number = jsonArray.getJSONObject(i).get("license_number").toString();
+                String colour = jsonArray.getJSONObject(i).get("colour").toString();
+                int number_doors = Integer.parseInt(jsonArray.getJSONObject(i).get("number_doors").toString());
+                String transmission = jsonArray.getJSONObject(i).get("transmission").toString();
+                int mileage = Integer.parseInt(jsonArray.getJSONObject(i).get("mileage").toString());
+                String fuel_type = jsonArray.getJSONObject(i).get("fuel_type").toString();
+                int engine_size = Integer.parseInt(jsonArray.getJSONObject(i).get("engine_size").toString());
+                String body_style = jsonArray.getJSONObject(i).get("body_style").toString();
+                String condition = jsonArray.getJSONObject(i).get("condition").toString();
+                String notes = jsonArray.getJSONObject(i).get("notes").toString();
+
+                System.out.println("model = " + model);
+
+                Vehicle v = new Vehicle( vehicle_id, make, model,
+                        year, price, license_number, colour, number_doors,
+                        transmission, mileage, fuel_type, engine_size,
+                        body_style, condition, notes);
+
+                allVehicles.add(v);
+
+                vehicles [i] = vehicle_id + " " + make + " " + model;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private String convertStreamToString(InputStream is) {
