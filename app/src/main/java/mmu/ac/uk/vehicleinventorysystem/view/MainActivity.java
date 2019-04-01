@@ -25,8 +25,11 @@ import java.util.ArrayList;
 import mmu.ac.uk.vehicleinventorysystem.R;
 import mmu.ac.uk.vehicleinventorysystem.model.Vehicle;
 
-
-//check cheese app week for more info
+/*
+*
+* @author Muhamad Irfan Hafiz bin Muhamad Hanafi, 17098640
+*
+ */
 public class MainActivity extends AppCompatActivity {
 
     String[] vehicles;
@@ -83,6 +86,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /*
+    * Get All Vehicles through an HTTP doGet Request
+     */
     private void GetVehicles()
     {
         HttpURLConnection urlConnection;
@@ -133,13 +139,18 @@ public class MainActivity extends AppCompatActivity {
 
                 allVehicles.add(v);
 
-                vehicles [i] = vehicle_id + " " + make + " " + model;
+                vehicles [i] = vehicle_id + " " + make + " " + model + " (" + year + ")\n" + license_number;
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
+    /*
+    * Converts Stream to String value
+    * @param InputStream
+    * @return String Value
+     */
     private String convertStreamToString(InputStream is) {
         java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
         return s.hasNext() ? s.next() : "";

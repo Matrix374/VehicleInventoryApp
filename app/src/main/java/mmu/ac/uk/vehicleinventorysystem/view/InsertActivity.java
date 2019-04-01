@@ -72,8 +72,8 @@ public class InsertActivity extends AppCompatActivity {
                 int v_mileage = Integer.parseInt(mileage.getText().toString());
                 String v_fuel_type = fuel_type.getText().toString();
                 int v_engine_size = Integer.parseInt(engine_size.getText().toString());
-                String v_body_style = make.getText().toString();
-                String v_condition = make.getText().toString();
+                String v_body_style = body_style.getText().toString();
+                String v_condition = condition.getText().toString();
                 String v_notes = notes.getText().toString();
 
                 Vehicle temp = new Vehicle(1, v_make, v_model,
@@ -96,10 +96,13 @@ public class InsertActivity extends AppCompatActivity {
 
     }
 
-    public String PostCall(String requestURL, HashMap<String, String> postDataParams)
+    /*
+    * Does a HTTP doPost Call
+    * @params URL, Parameters
+     */
+    public void PostCall(String requestURL, HashMap<String, String> postDataParams)
     {
         URL url;
-        String response = "";
         try {
             url = new URL(requestURL);
 
@@ -115,7 +118,7 @@ public class InsertActivity extends AppCompatActivity {
             OutputStream os = conn.getOutputStream();
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
 
-            writer.write(getPostDataString(postDataParams));
+            writer.write(getDataString(postDataParams));
 
             //clear the writer
             writer.flush();
@@ -131,27 +134,23 @@ public class InsertActivity extends AppCompatActivity {
             if(responseCode == HttpsURLConnection.HTTP_OK)
             {
                 Toast.makeText(this, "Vehicle Saved", Toast.LENGTH_LONG).show();
-                String line;
-                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                while((line = br.readLine()) != null)
-                {
-                    response += line;
-                }
             }
             else {
                 Toast.makeText(this, "Error failed to save vehicle", Toast.LENGTH_LONG).show();
-                response = "";
             }
         } catch (Exception e)
         {
             e.printStackTrace();
         }
 
-        System.out.println("response = " + response);
-        return response;
     }
 
-    private String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException
+    /*
+     * Converts HashMap to String value
+     * @param Parameters
+     * @return String Value
+     */
+    private String getDataString(HashMap<String, String> params) throws UnsupportedEncodingException
     {
         StringBuilder result = new StringBuilder();
         boolean first = true;

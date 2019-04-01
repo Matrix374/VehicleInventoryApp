@@ -48,10 +48,13 @@ public class DeleteActivity extends AppCompatActivity {
         });
     }
 
-    public String deleteCall(int id)
+    /*
+    * Does a HTTP doDelete Call
+    * @param Vehicle ID
+     */
+    public void deleteCall(int id)
     {
         URL url;
-        String response = "";
         try {
             url = new URL("http://10.0.2.2:4000/VDB/server?vehicle_id=" + id);
 
@@ -66,24 +69,14 @@ public class DeleteActivity extends AppCompatActivity {
             if(responseCode == HttpsURLConnection.HTTP_OK)
             {
                 Toast.makeText(this, "Vehicle Deleted", Toast.LENGTH_LONG).show();
-                String line;
-                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                while((line = br.readLine()) != null)
-                {
-                    response += line;
-                }
             }
             else {
                 Toast.makeText(this, "Error failed to delete vehicle", Toast.LENGTH_LONG).show();
-                response = "";
             }
         } catch (Exception e)
         {
             e.printStackTrace();
         }
-
-        System.out.println("response = " + response);
-        return response;
     }
 
     private class Delete extends AsyncTask<Void, Void, Void>

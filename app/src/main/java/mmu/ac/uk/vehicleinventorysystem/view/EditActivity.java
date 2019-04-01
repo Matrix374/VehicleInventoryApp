@@ -134,10 +134,13 @@ public class EditActivity extends AppCompatActivity {
         });
     }
 
-    public String PutCall(String requestURL, HashMap<String, String> postDataParams)
+    /*
+    * Does a HTTP doPut request
+    * @param URL, Parameters
+     */
+    public void PutCall(String requestURL, HashMap<String, String> postDataParams)
     {
         URL url;
-        String response = "";
         try {
             url = new URL(requestURL);
 
@@ -169,26 +172,21 @@ public class EditActivity extends AppCompatActivity {
             if(responseCode == HttpsURLConnection.HTTP_OK)
             {
                 Toast.makeText(this, "Vehicle Saved", Toast.LENGTH_LONG).show();
-                String line;
-                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                while((line = br.readLine()) != null)
-                {
-                    response += line;
-                }
             }
             else {
                 Toast.makeText(this, "Error failed to save vehicle", Toast.LENGTH_LONG).show();
-                response = "";
             }
         } catch (Exception e)
         {
             e.printStackTrace();
         }
-
-        System.out.println("response = " + response);
-        return response;
     }
 
+    /*
+     * Converts HashMap to String value
+     * @param Parameters
+     * @return String Value
+     */
     private String getDataString(HashMap<String, String> params) throws UnsupportedEncodingException
     {
         StringBuilder result = new StringBuilder();
