@@ -1,7 +1,7 @@
 package mmu.ac.uk.vehicleinventorysystem.view;
 
 import android.content.Intent;
-import android.os.StrictMode;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -30,14 +30,13 @@ import mmu.ac.uk.vehicleinventorysystem.model.Vehicle;
 
 public class InsertActivity extends AppCompatActivity {
 
+    HashMap<String, String> params = new HashMap<>();
+    String url;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insert);
-
-        //run network on main thread hack
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
 
         final EditText make = (EditText) findViewById(R.id.make);
         final EditText model = (EditText) findViewById(R.id.model);
@@ -55,8 +54,6 @@ public class InsertActivity extends AppCompatActivity {
         final EditText notes = (EditText) findViewById(R.id.notes);
 
         Button submit = findViewById(R.id.submit);
-
-        final HashMap<String, String> params = new HashMap<>();
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,13 +87,10 @@ public class InsertActivity extends AppCompatActivity {
 
                 params.put("json", vehicleJson);
 
-                String url = "http://10.0.2.2:4000/VDB/server";
+                url = "http://10.0.2.2:4000/VDB/server";
 
-                PostCall(url, params);
-
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-
-                startActivity(intent);
+                Insert post = new Insert();
+                post.execute();
             }
         });
 
@@ -174,5 +168,31 @@ public class InsertActivity extends AppCompatActivity {
         }
 
         return result.toString();
+    }
+
+    private class Insert extends AsyncTask<Void, Void, Void>
+    {
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            System.out.println("Start Posting!");
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            System.out.println("Posting...");
+            PostCall(url, params);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid)
+        {
+            super.onPostExecute(aVoid);
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            System.out.println("Finished Posting");
+        }
     }
 }

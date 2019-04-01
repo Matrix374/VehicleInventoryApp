@@ -2,7 +2,6 @@ package mmu.ac.uk.vehicleinventorysystem.view;
 
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -87,7 +86,7 @@ public class DeleteActivity extends AppCompatActivity {
         return response;
     }
 
-    private class Delete extends AsyncTask<Void, Integer, Void>
+    private class Delete extends AsyncTask<Void, Void, Void>
     {
         @Override
         protected void onPreExecute()
@@ -97,9 +96,9 @@ public class DeleteActivity extends AppCompatActivity {
         }
 
         @Override
-        protected Void doInBackground(Void... voids) {
-            System.out.println("Deleting...");
-            deleteCall(vehicle_id);
+            protected Void doInBackground(Void... voids) {
+                System.out.println("Deleting...");
+                deleteCall(vehicle_id);
             return null;
         }
 

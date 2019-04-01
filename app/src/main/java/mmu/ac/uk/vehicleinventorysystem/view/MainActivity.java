@@ -1,9 +1,9 @@
 package mmu.ac.uk.vehicleinventorysystem.view;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.os.StrictMode;
 
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,22 +16,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.net.ssl.HttpsURLConnection;
 
 import mmu.ac.uk.vehicleinventorysystem.R;
 import mmu.ac.uk.vehicleinventorysystem.model.Vehicle;
@@ -42,23 +31,19 @@ public class MainActivity extends AppCompatActivity {
 
     String[] vehicles;
     ArrayList<Vehicle> allVehicles = new ArrayList<Vehicle>();
+    ListView vehicleList;
+    ArrayAdapter<String> arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //run network on main thread hack
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-
-        ListView vehicleList = findViewById(R.id.vehicleListView);
+        vehicleList = findViewById(R.id.vehicleListView);
         Button addVehicle = findViewById(R.id.addVehicle);
 
-        GetVehicles();
-
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, vehicles);
-        vehicleList.setAdapter(arrayAdapter);
+        Get get = new Get();
+        get.execute();
 
         vehicleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -96,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 
     private void GetVehicles()
@@ -159,5 +143,31 @@ public class MainActivity extends AppCompatActivity {
     private String convertStreamToString(InputStream is) {
         java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
         return s.hasNext() ? s.next() : "";
+    }
+
+    private class Get extends AsyncTask<Void, Void, Void>
+    {
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            System.out.println("Start Deleting!");
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            System.out.println("Getting...");
+            GetVehicles();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid)
+        {
+            super.onPostExecute(aVoid);
+            arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, vehicles);
+            vehicleList.setAdapter(arrayAdapter);
+            System.out.println("Finished Getting");
+        }
     }
 }
